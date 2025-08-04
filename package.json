@@ -15,7 +15,7 @@
     "@whiskeysockets/baileys": "^6.7.18",
     "axios": "^1.11.0",
     "cfonts": "^3.3.0",
-    "chalk": "^5.4.1",
+    "chalk": "^4.1.2",
     "figlet": "^1.8.2",
     "file-type": "^21.0.0",
     "fluent-ffmpeg": "^2.1.3",

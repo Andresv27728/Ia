@@ -64,3 +64,27 @@ module.exports = {
         temp_ban_hours: 12, // Hours for temporary ban
     }
 };
+module.exports = {
+    bot: {
+        name: "WA-Bot",
+        emoji: "🤖",
+        prefix: "!",
+        version: "1.0.0",
+        owners: ["1234567890"] // Replace with your WhatsApp number
+    },
+    
+    message: {
+        always_online: true,
+        footer: "Powered by Baileys",
+        show_messages: true
+    },
+    
+    logs: {
+        level: "info",
+        show_messages: true
+    },
+    
+    database: {
+        save_interval: 30 // seconds
+    }
+};
