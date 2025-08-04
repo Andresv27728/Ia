@@ -53,7 +53,6 @@ async function connectToWhatsApp() {
     const sock = makeWASocket({
         version,
         auth: state,
-        printQRInTerminal: true,
         logger: P({ level: settings.logs.level }),
         browser: ['WA-Bot', 'Chrome', '1.0.0'],
         markOnlineOnConnect: settings.message.always_online
@@ -69,6 +68,16 @@ async function connectToWhatsApp() {
     // Connection update events
     sock.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update;
+        
+        // Display QR code when available
+        if (qr) {
+            console.log(chalk.yellow('\n📱 Scan this QR code with WhatsApp:\n'));
+            qrcode.generate(qr, { small: true });
+            console.log(chalk.cyan('\n1. Open WhatsApp on your phone'));
+            console.log(chalk.cyan('2. Go to Settings > Linked Devices'));
+            console.log(chalk.cyan('3. Tap "Link a Device"'));
+            console.log(chalk.cyan('4. Scan the QR code above\n'));
+        }
         
         if(connection === 'close') {
             const shouldReconnect = 
