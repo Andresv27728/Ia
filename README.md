@@ -1,281 +1,198 @@
-has un bot de whatsapp en javascript y nodejs usando brailes para vincularse que se use un sistema de plugins los cuales serán los comandos además que se pueda subir todo a github la instalarla en servidores como boxmine o termux o otras plataformas demás pon todas las instrrucciones de uso en el readme además pon 100 comandos variados pon coamndos de administracion de grupos descarga las cuales usaran apis publicas y gratuitas comandos de juegos y muchos mas además en el setings se defina el numero del owner el cuale es el dueño del bot también el nombre del bot y el canal del bot además que tenga un sistema de subbots unos públicos los cuales solo tendrán comandos mínimos y básicos como 2 de descarga muy pocos de administración de grupos menos juegos y eso y para ser premium el owner se lo tiene que otorgar con un comando que sea algo como esto vip numero de telefono y el tiempo que será vip además que se envie una notificación al faltar 1 día sin ser vip que use brailes para la coneccion y que hagas un colado que sea update y este en los 2 auque solo lo pueda usar el owner los comandos de administración de grupo que solo se puedan usar en los grupos crea comandos de ping infobot estado y todo lo necesario adelas que en la consola se vean los mensajes del bot crea opciones de activar o descativar comandos como las bienvenidas o el antilink además que los comandos de leo bots free y los de los bots premium estén en carpetas totalmente separados  inspírate en gatabot 
+# JulesBot-MD - Bot de WhatsApp Multifuncional
 
+![Banner](https://i.imgur.com/U2gK8pG.png)
 
+Un potente bot de WhatsApp construido con Node.js y Baileys. Diseñado para ser modular, extensible y fácil de usar. Inspirado en la funcionalidad de bots populares, este proyecto ofrece una base sólida para crear tu propio asistente de WhatsApp.
 
+## ✨ Características Principales
 
-# WhatsApp Bot with Baileys
+-   **🔌 Sistema de Plugins:** Añade nuevos comandos fácilmente creando archivos en las carpetas de plugins. ¡Sin necesidad de tocar el código principal!
+-   **👑 Sistema VIP:** Gestiona usuarios premium con acceso a comandos exclusivos. El acceso es por tiempo limitado y fácil de otorgar.
+-   **📂 Comandos por Categorías:**
+    -   `/free`: Comandos básicos para todos los usuarios.
+    -   `/premium`: Comandos exclusivos para usuarios VIP (descargas, juegos, etc.).
+    -   `/admin`: Comandos de administración de grupos.
+    -   `/owner`: Comandos restringidos para el dueño del bot.
+-   **⚙️ Configuración Sencilla:** Personaliza el nombre del bot, el prefijo, los dueños y más desde un único archivo `config/settings.js`.
+-   **💬 Interactivo:** Respuestas automáticas, mensajes de bienvenida, anti-enlaces y más, todo configurable.
+-   **🚀 Despliegue Flexible:** Instrucciones claras para instalar en tu PC, en Termux (Android) o en un servidor VPS/Boxmine.
 
-A powerful WhatsApp bot built with JavaScript and Node.js using the Baileys library. This bot features a plugin-based command system, premium user management, and lots of useful commands.
+## 📋 Requisitos Previos
 
-![WhatsApp Bot](https://i.imgur.com/example.png)
+-   **Node.js:** Versión 16 o superior.
+-   **Git:** Para clonar el repositorio.
+-   **Ffmpeg:** Necesario para procesar stickers, videos y audios.
+-   **Una cuenta de WhatsApp:** El número que usará el bot.
 
-## ✨ Features
+## 📲 Instalación
 
-- 🔌 Plugin-based command system
-- 👑 Premium user management
-- 🧩 100+ built-in commands
-- 👥 Group management
-- 🎮 Games and fun commands
-- ⬇️ Media downloading
-- 🔄 Easy to extend with new plugins
-- 📊 User statistics
-- 🔐 Sub-bot system (public/premium)
+Sigue los pasos según tu plataforma.
 
-## 📋 Requirements
-
-- Node.js v14+
-- A WhatsApp account
-- Internet connection
-
-## 📲 Installation
-
-### Method 1: Local Installation
+### 1. Instalación Local (Windows/MacOS/Linux)
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/whatsapp-bot-baileys.git
+# Clona este repositorio
+git clone https://github.com/your-username/julesbot-md.git
 
-# Navigate to the directory
-cd whatsapp-bot-baileys
+# Entra en el directorio del bot
+cd julesbot-md
 
-# Install dependencies
+# Instala las dependencias (puede tardar unos minutos)
 npm install
 
-# Start the bot
-npm start
+# ¡Listo! Ahora ve a la sección de Configuración.
 ```
 
-### Method 2: Termux (Android)
+### 2. Instalación en Termux (Android)
 
 ```bash
-# Update packages
+# Actualiza los paquetes de Termux
 pkg update && pkg upgrade
 
-# Install required packages
-pkg install nodejs git libwebp ffmpeg imagemagick
+# Instala las herramientas necesarias
+pkg install nodejs git ffmpeg libwebp imagemagick
 
-# Clone the repository
-git clone https://github.com/yourusername/whatsapp-bot-baileys.git
+# Clona este repositorio
+git clone https://github.com/your-username/julesbot-md.git
 
-# Navigate to the directory
-cd whatsapp-bot-baileys
+# Entra en el directorio del bot
+cd julesbot-md
 
-# Install dependencies
+# Instala las dependencias
 npm install
 
-# Start the bot
-npm start
+# ¡Listo! Ahora ve a la sección de Configuración.
 ```
 
-### Method 3: Boxmine or VPS
+### 3. Instalación en un Servidor (VPS/Boxmine)
 
 ```bash
-# Login to your server via SSH
-ssh user@yourserver
+# Conéctate a tu servidor por SSH
 
-# Update system
-apt update && apt upgrade
+# Actualiza los paquetes del sistema
+sudo apt update && sudo apt upgrade -y
 
-# Install required packages
-apt install nodejs git libwebp ffmpeg imagemagick
+# Instala las herramientas necesarias
+sudo apt install nodejs git ffmpeg -y
 
-# Clone the repository
-git clone https://github.com/yourusername/whatsapp-bot-baileys.git
+# Clona este repositorio
+git clone https://github.com/your-username/julesbot-md.git
 
-# Navigate to the directory
-cd whatsapp-bot-baileys
+# Entra en el directorio del bot
+cd julesbot-md
 
-# Install dependencies
+# Instala las dependencias
 npm install
 
-# Install PM2 to keep the bot running
+# (Recomendado) Usa PM2 para mantener el bot activo 24/7
 npm install -g pm2
-
-# Start the bot with PM2
-pm2 start index.js --name "whatsapp-bot"
-
-# Check logs
-pm2 logs whatsapp-bot
+# Inicia el bot con PM2
+pm2 start index.js --name "julesbot"
+# Para ver los logs: pm2 logs julesbot
+# Para detener el bot: pm2 stop julesbot
 ```
 
-## ⚙️ Configuration
+## ⚙️ Configuración
 
-Edit `config/settings.js` to customize your bot:
+Antes de iniciar el bot, es **muy importante** que configures tus datos.
+
+1.  Abre el archivo `config/settings.js`.
+2.  Edita la sección `bot`:
 
 ```javascript
+// config/settings.js
+
 module.exports = {
     bot: {
-        name: "YourBotName", // Bot name
-        emoji: "🤖", // Bot emoji
-        prefix: "!", // Command prefix
-        owners: ["1234567890"], // Your WhatsApp number
+        name: "JulesBot", // El nombre de tu bot
+        emoji: "🤖",
+        version: "1.0.0",
+        prefix: "!", // El prefijo para los comandos (ej. !menu)
+        owners: ["521XXXXXXXXXX", "1234567890"], // ¡TU NÚMERO DE WHATSAPP AQUÍ!
+        channel: "https://www.youtube.com/c/yourchannel", // Tu canal (opcional)
     },
-    // More settings...
+    // ... más configuraciones
+}
+```
+
+**¡Atención!** Reemplaza `"521XXXXXXXXXX"` con tu número de WhatsApp en formato internacional (código de país + número), sin espacios ni el signo `+`.
+
+## 🚀 Cómo Iniciar el Bot
+
+Una vez instalado y configurado:
+
+1.  Ejecuta el comando de inicio en tu terminal:
+    ```bash
+    npm start
+    ```
+2.  **Escanea el QR:** Abre WhatsApp en tu teléfono, ve a `Dispositivos Vinculados` y escanea el código QR que aparecerá en la terminal.
+3.  Espera a que la conexión se establezca. Verás un mensaje de "Conectado!" en la consola.
+4.  ¡Listo! Envía `!ping` desde cualquier chat para probar si el bot responde.
+
+## 👑 Sistema VIP
+
+Los usuarios VIP tienen acceso a comandos premium.
+
+### ¿Cómo dar VIP a un usuario?
+
+Solo el dueño del bot puede hacerlo. Usa el siguiente comando en cualquier chat con el bot:
+
+```
+!vip <número> <días>
+```
+
+-   **Ejemplo:** `!vip 521987654321 30`
+-   Esto le dará al número `521987654321` acceso VIP durante `30` días.
+
+El bot enviará una confirmación al dueño y una notificación al nuevo usuario VIP. También avisará al usuario un día antes de que su suscripción expire.
+
+## 🧩 Añadir Nuevos Comandos (Para Desarrolladores)
+
+El sistema de plugins hace que sea muy fácil añadir comandos.
+
+1.  Decide la categoría de tu comando: `free`, `premium`, `admin` u `owner`.
+2.  Si es un comando de `premium`, puedes crear una subcarpeta (ej. `premium/tools`).
+3.  Crea un nuevo archivo `.js` en la carpeta elegida (ej. `plugins/free/saludo.js`).
+4.  Usa la siguiente plantilla para tu comando:
+
+```javascript
+/**
+ * Descripción corta del comando.
+ * Categoría: free
+ */
+
+const settings = require('../../config/settings'); // Importa la config si necesitas el prefijo, etc.
+
+module.exports = {
+    name: 'saludo', // El nombre del comando (lo que va después del prefijo)
+    desc: 'Envía un saludo amigable.', // Descripción para el menú de ayuda
+    usage: `${settings.bot.prefix}saludo`, // Cómo se usa el comando
+
+    // --- Banderas Opcionales ---
+    isOwner: false,       // ¿Solo para el dueño?
+    isPremium: false,     // ¿Solo para VIP? (se infiere de la carpeta 'premium')
+    isGroup: false,       // ¿Solo para grupos?
+    isGroupAdmin: false,  // ¿Solo para admins de grupo?
+
+    // --- La Lógica del Comando ---
+    execute: async (ctx) => {
+        const { sock, from, sender, msg } = ctx;
+
+        const message = `¡Hola, @${sender.split('@')[0]}! Soy JulesBot.`;
+
+        await sock.sendMessage(from, {
+            text: message,
+            mentions: [sender] // Importante para etiquetar al usuario
+        }, { quoted: msg });
+    }
 };
 ```
 
-## 🚀 Getting Started
+¡Eso es todo! El bot cargará automáticamente tu nuevo comando al reiniciar.
 
-1. Start the bot: `npm start`
-2. Scan the QR code with WhatsApp
-3. Wait for the bot to connect
-4. Try a command like `!help` to get started
+## 🔄 Comando de Actualización
 
-## 📝 Sub-bot System
-
-This bot includes a sub-bot system with two tiers:
-
-### Public Sub-bots
-
-- Limited access to basic commands
-- Only 2 download commands
-- Minimal group administration commands
-- Limited game commands
-- Perfect for testing the bot
-
-### Premium Sub-bots
-
-- Full access to all commands
-- All download options available
-- Complete group administration
-- All games and fun features
-- Premium features
-
-## 👑 Premium Management
-
-### How to Add Premium Users
-
-As the owner of the bot, use the command:
-
-```
-!vip 1234567890 30
-```
-
-This gives premium access to the number `1234567890` for `30` days.
-
-### Premium Benefits
-
-- Full access to all commands
-- Unlimited downloads
-- Priority processing
-- No usage limits
-
-## 📚 Available Commands
-
-Here's a list of some available commands:
-
-### 👮 Admin Commands
-- `!kick @user` - Remove a user from the group
-- `!add 1234567890` - Add a user to the group
-- `!promote @user` - Make a user admin
-- `!demote @user` - Remove admin status
-- `!mute` - Mute the group (only admins can send messages)
-- `!unmute` - Unmute the group
-- `!link` - Get the group invite link
-- `!setname New Group Name` - Change group name
-- `!setdesc New Description` - Change group description
-- `!tagall` - Mention all members
-- `!warning @user` - Give a warning to a user
-
-### ⬇️ Download Commands
-- `!ytmp3 URL` - Download YouTube audio
-- `!ytmp4 URL` - Download YouTube video
-- `!fb URL` - Download Facebook video
-- `!ig URL` - Download Instagram post/video
-- `!tiktok URL` - Download TikTok video
-- `!twitter URL` - Download Twitter video
-- `!spotify URL` - Download Spotify track
-- `!image query` - Search and download an image
-- `!pinterest query` - Download from Pinterest
-
-### 🎮 Game Commands
-- `!tictactoe @user` - Play Tic Tac Toe
-- `!hangman` - Play Hangman
-- `!trivia` - Trivia questions
-- `!math` - Math challenges
-- `!quiz` - General knowledge quiz
-- `!riddle` - Solve riddles
-- `!truth` - Truth question
-- `!dare` - Dare challenge
-- `!roll` - Roll a dice
-- `!flip` - Flip a coin
-
-### 👑 Owner Commands
-- `!broadcast message` - Send message to all users
-- `!eval code` - Evaluate JavaScript code
-- `!exec command` - Execute shell command
-- `!ban @user reason` - Ban a user
-- `!unban phone_number` - Unban a user
-- `!setname name` - Change bot name
-- `!restart` - Restart the bot
-- `!update` - Update bot from repository
-- `!vip number days` - Give premium access
-- `!stats` - Show bot statistics
-
-### ⭐ Premium Commands
-- `!sticker` - Create stickers from images/videos
-- `!translate text` - Translate text to different language
-- `!ocr` - Extract text from image
-- `!removebg` - Remove background from image
-- `!weather city` - Get weather information
-- `!wallpaper query` - Download HD wallpapers
-- `!lyrics song name` - Find song lyrics
-- `!anime title` - Search anime information
-
-### 🌐 Public Commands
-- `!help` - Show command list
-- `!info` - Bot information
-- `!ping` - Check bot response time
-- `!profile` - View your profile
-- `!menu` - Show complete menu
-- `!status` - Check bot status
-- `!creator` - Bot creator info
-- `!donate` - Support the developer
-
-## ⚠️ Troubleshooting
-
-### Common Issues
-
-1. **QR Code Not Showing**
-   - Make sure your terminal supports QR rendering
-   - Try using `npm run qr` to generate a QR code
-
-2. **Connection Issues**
-   - Check your internet connection
-   - Ensure your WhatsApp is up to date
-   - Try deleting the `sessions` folder and reconnecting
-
-3. **Missing Dependencies**
-   - Run `npm install` again to ensure all dependencies are installed
-   - For media processing, ensure ffmpeg is properly installed
-
-### Still Having Problems?
-
-Open an issue on GitHub with:
-- Your system information
-- Error logs
-- Steps to reproduce the issue
-
-## 🌟 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👤 Contact
-
-- WhatsApp: +1234567890
-- Email: your-email@example.com
-- GitHub: [yourusername](https://github.com/yourusername)
+Si instalaste el bot usando `git clone`, el dueño puede usar el comando `!update` para actualizar el código del bot directamente desde el repositorio de GitHub sin necesidad de acceder a la terminal.
 
 ---
-
-Made with ❤️ by Your Name
+Hecho con ❤️ por Jules.

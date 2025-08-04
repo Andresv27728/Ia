@@ -14,7 +14,7 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 
 // Local modules
-const { initDatabase, saveDatabase } = require('./lib/database');
+const { initDatabase, saveDatabase, checkPremiumExpiration } = require('./lib/database');
 const { loadPlugins } = require('./lib/loader');
 const { checkPermission, processMessage } = require('./lib/functions');
 const { handleAntiLink, handleWelcome } = require('./lib/message-handlers');
@@ -92,6 +92,12 @@ async function connectToWhatsApp() {
                     text: `🤖 *${settings.bot.name} is now active!*\n\nRunning version: ${settings.bot.version}` 
                 });
             }
+
+            // Periodically check for premium expirations
+            setInterval(() => {
+                logger.info('Running hourly check for premium expirations...');
+                checkPremiumExpiration(sock);
+            }, 60 * 60 * 1000); // Check every hour
         }
     });
     
