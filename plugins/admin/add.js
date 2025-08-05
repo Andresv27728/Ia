@@ -1,116 +1,41 @@
-/**
- * Add command
- * Category: admin
- */
+import config from '../../config.js';
 
-const { formatMessage } = require('../../lib/connect');
-const logger = require('../../utils/logger');
+export default {
+    name: 'add',
+    desc: 'Adds a participant to the group.',
+    usage: `${config.prefix}add <number>`,
+    isGroup: true,
+    isGroupAdmin: true,
 
-module.exports = {
-    name: 'Add',
-    desc: 'Add a participant to the group',
-    usage: '!add phoneNumber',
-    
-    /**
-     * Execute command
-     * @param {Object} ctx - Command context
-     */
-    execute: async (ctx) => {
-        const { sock, message, args, metadata } = ctx;
-        
-        // Check if the command is used in a group
-        if (!metadata.isGroup) {
-            await sock.sendMessage(metadata.from, { 
-                text: formatMessage('❌ This command can only be used in groups!') 
-            });
-            return;
+    async execute({ sock, from, args, msg }) {
+        if (!args[0]) {
+            return sock.sendMessage(from, { text: 'Please provide a phone number to add.' }, { quoted: msg });
+        }
+
+        const targetUser = args[0].replace(/[@\s-]/g, '');
+        if (!/^\d+$/.test(targetUser)) {
+            return sock.sendMessage(from, { text: 'Invalid phone number format.' }, { quoted: msg });
         }
         
-        // Check if the user is an admin
-        const isAdmin = metadata.isGroupAdmin || metadata.fromMe;
-        if (!isAdmin) {
-            await sock.sendMessage(metadata.from, { 
-                text: formatMessage('❌ You need to be an admin to use this command!') 
-            });
-            return;
-        }
-        
-        // Check if the bot is an admin
-        if (!metadata.isBotAdmin) {
-            await sock.sendMessage(metadata.from, { 
-                text: formatMessage('❌ I need to be an admin to add users!') 
-            });
-            return;
-        }
-        
-        // Check if a phone number is provided
-        if (args.length === 0) {
-            await sock.sendMessage(metadata.from, { 
-                text: formatMessage('❌ You need to provide a phone number!\n\n📝 Usage: !add phoneNumber')
-            });
-            return;
-        }
-        
-        // Format the phone number
-        let phoneNumber = args[0];
-        
-        // Remove any + or - characters
-        phoneNumber = phoneNumber.replace(/[+\- ]/g, '');
-        
-        // Check if the number contains @s.whatsapp.net or @g.us
-        if (!phoneNumber.includes('@')) {
-            // Add @s.whatsapp.net if it doesn't have it
-            phoneNumber = `${phoneNumber}@s.whatsapp.net`;
-        }
-        
-        // Attempt to add user
+        const targetJid = `${targetUser}@s.whatsapp.net`;
+
         try {
-            // Check if the user exists on WhatsApp
-            const [result] = await sock.onWhatsApp(phoneNumber);
+            const response = await sock.groupParticipantsUpdate(from, [targetJid], 'add');
             
-            if (!result || !result.exists) {
-                await sock.sendMessage(metadata.from, { 
-                    text: formatMessage('❌ The provided number is not registered on WhatsApp!') 
-                });
-                return;
-            }
-            
-            // Add user to group
-            const response = await sock.groupParticipantsUpdate(metadata.from, [result.jid], 'add');
-            logger.debug('Add user response:', JSON.stringify(response));
-            
-            // Check response
-            if (response && response[0] && response[0].status === '200') {
-                await sock.sendMessage(metadata.from, { 
-                    text: formatMessage(`✅ @${result.jid.split('@')[0]} has been added to the group!`), 
-                    mentions: [result.jid]
-                });
-            } else if (response && response[0] && response[0].status === '403') {
-                await sock.sendMessage(metadata.from, { 
-                    text: formatMessage(`❌ Failed to add @${phoneNumber.split('@')[0]} to the group. They may have their privacy settings set to not be added to groups.`),
-                    mentions: [phoneNumber]
-                });
-            } else if (response && response[0] && response[0].status === '408') {
-                await sock.sendMessage(metadata.from, { 
-                    text: formatMessage(`❌ The user @${phoneNumber.split('@')[0]} has already been invited to this group.`),
-                    mentions: [phoneNumber]
-                });
-            } else if (response && response[0] && response[0].status === '409') {
-                await sock.sendMessage(metadata.from, { 
-                    text: formatMessage(`❌ The user @${phoneNumber.split('@')[0]} is already in this group.`),
-                    mentions: [phoneNumber]
-                });
+            // Baileys provides a detailed response for each participant
+            const result = response[0];
+            if (result.status === '200') {
+                await sock.sendMessage(from, { text: `✅ Successfully added @${targetUser}.`, mentions: [targetJid] }, { quoted: msg });
+            } else if (result.status === '403') {
+                 await sock.sendMessage(from, { text: `❌ Failed to add @${targetUser}. They may have privacy settings that prevent them from being added.`, mentions: [targetJid] }, { quoted: msg });
+            } else if (result.status === '409') {
+                 await sock.sendMessage(from, { text: `❌ @${targetUser} is already a member of this group.`, mentions: [targetJid] }, { quoted: msg });
             } else {
-                await sock.sendMessage(metadata.from, { 
-                    text: formatMessage(`❌ Failed to add @${phoneNumber.split('@')[0]} to the group. Unknown error.`),
-                    mentions: [phoneNumber]
-                });
+                 await sock.sendMessage(from, { text: `Failed to add @${targetUser}. Status: ${result.status}` }, { quoted: msg });
             }
         } catch (error) {
-            logger.error('Error in add command:', error);
-            await sock.sendMessage(metadata.from, { 
-                text: formatMessage(`❌ An error occurred: ${error.message}`) 
-            });
+            console.error('Error in add command:', error);
+            await sock.sendMessage(from, { text: 'An error occurred. I may not have admin privileges or the number is invalid.' }, { quoted: msg });
         }
     }
 };

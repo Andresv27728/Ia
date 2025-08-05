@@ -1,38 +1,19 @@
-/**
- * Ping command
- * Category: public
- */
+import config from '../../config.js';
 
-const { formatMessage } = require('../../lib/connect');
-const settings = require('../../config/settings');
+export default {
+    name: 'ping',
+    desc: 'Checks the bot\'s response time.',
+    usage: `${config.prefix}ping`,
 
-module.exports = {
-    name: 'Ping',
-    desc: 'Check bot response time',
-    usage: '!ping',
-    
-    /**
-     * Execute command
-     * @param {Object} ctx - Command context
-     */
-    execute: async (ctx) => {
-        const { sock, message, metadata } = ctx;
-        
-        // Record start time
-        const start = Date.now();
-        
-        // Send initial message
-        const pingMsg = await sock.sendMessage(metadata.from, { 
-            text: formatMessage(`🏓 *Pinging...*`) 
-        });
-        
-        // Calculate response time
-        const responseTime = Date.now() - start;
-        
-        // Update message with response time
-        await sock.sendMessage(metadata.from, { 
-            text: formatMessage(`🏓 *Pong!*\n\n⏱️ Response time: *${responseTime}ms*\n🤖 Bot status: *Online*`),
-            edit: pingMsg.key
+    async execute({ sock, from, msg }) {
+        const startTime = Date.now();
+        const sentMsg = await sock.sendMessage(from, { text: 'Pinging...' }, { quoted: msg });
+        const endTime = Date.now();
+        const latency = endTime - startTime;
+
+        await sock.sendMessage(from, {
+            text: `Pong! 🏓\n*Latency:* ${latency} ms`,
+            edit: sentMsg.key
         });
     }
 };

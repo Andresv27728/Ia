@@ -1,198 +1,101 @@
-# JulesBot-MD - Bot de WhatsApp Multifuncional
+# YuruYuri-MD - Bot de WhatsApp
 
-![Banner](https://i.imgur.com/U2gK8pG.png)
+Un bot de WhatsApp multifuncional, construido desde cero con Node.js y Baileys, enfocado en el rendimiento, la modularidad y la facilidad de uso.
 
-Un potente bot de WhatsApp construido con Node.js y Baileys. Diseñado para ser modular, extensible y fácil de usar. Inspirado en la funcionalidad de bots populares, este proyecto ofrece una base sólida para crear tu propio asistente de WhatsApp.
+## ✨ Características
 
-## ✨ Características Principales
+-   **🔌 Sistema de Plugins:** Añade nuevos comandos fácilmente creando archivos en las carpetas de `plugins`.
+-   **👑 Sistema VIP:** Gestiona usuarios premium con acceso a comandos exclusivos, otorgado por un tiempo limitado.
+-   **⚙️ Configuración Sencilla:** Personaliza el nombre del bot, el prefijo y los dueños desde `config.js`.
+-   **🚀 Despliegue Flexible:** Diseñado para funcionar en tu PC, en Termux (Android) o en un servidor VPS.
+-   **🇪🇸 Totalmente en Español:** Tanto el código como la documentación están pensados para la comunidad de habla hispana.
 
--   **🔌 Sistema de Plugins:** Añade nuevos comandos fácilmente creando archivos en las carpetas de plugins. ¡Sin necesidad de tocar el código principal!
--   **👑 Sistema VIP:** Gestiona usuarios premium con acceso a comandos exclusivos. El acceso es por tiempo limitado y fácil de otorgar.
--   **📂 Comandos por Categorías:**
-    -   `/free`: Comandos básicos para todos los usuarios.
-    -   `/premium`: Comandos exclusivos para usuarios VIP (descargas, juegos, etc.).
-    -   `/admin`: Comandos de administración de grupos.
-    -   `/owner`: Comandos restringidos para el dueño del bot.
--   **⚙️ Configuración Sencilla:** Personaliza el nombre del bot, el prefijo, los dueños y más desde un único archivo `config/settings.js`.
--   **💬 Interactivo:** Respuestas automáticas, mensajes de bienvenida, anti-enlaces y más, todo configurable.
--   **🚀 Despliegue Flexible:** Instrucciones claras para instalar en tu PC, en Termux (Android) o en un servidor VPS/Boxmine.
-
-## 📋 Requisitos Previos
+## 📋 Requisitos
 
 -   **Node.js:** Versión 16 o superior.
 -   **Git:** Para clonar el repositorio.
--   **Ffmpeg:** Necesario para procesar stickers, videos y audios.
--   **Una cuenta de WhatsApp:** El número que usará el bot.
+-   **Ffmpeg:** Para el procesamiento de stickers, videos y audios.
+-   **Una cuenta de WhatsApp.**
 
 ## 📲 Instalación
 
-Sigue los pasos según tu plataforma.
+1.  **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/your-username/YuruYuri-MD.git
+    cd YuruYuri-MD
+    ```
 
-### 1. Instalación Local (Windows/MacOS/Linux)
-
-```bash
-# Clona este repositorio
-git clone https://github.com/your-username/julesbot-md.git
-
-# Entra en el directorio del bot
-cd julesbot-md
-
-# Instala las dependencias (puede tardar unos minutos)
-npm install
-
-# ¡Listo! Ahora ve a la sección de Configuración.
-```
-
-### 2. Instalación en Termux (Android)
-
-```bash
-# Actualiza los paquetes de Termux
-pkg update && pkg upgrade
-
-# Instala las herramientas necesarias
-pkg install nodejs git ffmpeg libwebp imagemagick
-
-# Clona este repositorio
-git clone https://github.com/your-username/julesbot-md.git
-
-# Entra en el directorio del bot
-cd julesbot-md
-
-# Instala las dependencias
-npm install
-
-# ¡Listo! Ahora ve a la sección de Configuración.
-```
-
-### 3. Instalación en un Servidor (VPS/Boxmine)
-
-```bash
-# Conéctate a tu servidor por SSH
-
-# Actualiza los paquetes del sistema
-sudo apt update && sudo apt upgrade -y
-
-# Instala las herramientas necesarias
-sudo apt install nodejs git ffmpeg -y
-
-# Clona este repositorio
-git clone https://github.com/your-username/julesbot-md.git
-
-# Entra en el directorio del bot
-cd julesbot-md
-
-# Instala las dependencias
-npm install
-
-# (Recomendado) Usa PM2 para mantener el bot activo 24/7
-npm install -g pm2
-# Inicia el bot con PM2
-pm2 start index.js --name "julesbot"
-# Para ver los logs: pm2 logs julesbot
-# Para detener el bot: pm2 stop julesbot
-```
+2.  **Instala las dependencias:**
+    Este proyecto usa una gran cantidad de dependencias para los *scrapers* y otras funciones. La instalación puede tardar varios minutos.
+    ```bash
+    npm install
+    ```
 
 ## ⚙️ Configuración
 
-Antes de iniciar el bot, es **muy importante** que configures tus datos.
+Antes de iniciar el bot, debes configurar tu número de dueño.
 
-1.  Abre el archivo `config/settings.js`.
-2.  Edita la sección `bot`:
+1.  Abre el archivo `config.js`.
+2.  Busca la línea `const owner = ['5219999999999'];`.
+3.  **Reemplaza el número de ejemplo con tu número de WhatsApp** en formato internacional (código de país + número, sin el `+`).
 
-```javascript
-// config/settings.js
+    ```javascript
+    // Ejemplo:
+    const owner = ['12345678901']; // Número de Estados Unidos
+    const owner = ['5218112345678']; // Número de México
+    ```
 
-module.exports = {
-    bot: {
-        name: "JulesBot", // El nombre de tu bot
-        emoji: "🤖",
-        version: "1.0.0",
-        prefix: "!", // El prefijo para los comandos (ej. !menu)
-        owners: ["521XXXXXXXXXX", "1234567890"], // ¡TU NÚMERO DE WHATSAPP AQUÍ!
-        channel: "https://www.youtube.com/c/yourchannel", // Tu canal (opcional)
-    },
-    // ... más configuraciones
-}
-```
+## 🚀 Iniciar el Bot
 
-**¡Atención!** Reemplaza `"521XXXXXXXXXX"` con tu número de WhatsApp en formato internacional (código de país + número), sin espacios ni el signo `+`.
-
-## 🚀 Cómo Iniciar el Bot
-
-Una vez instalado y configurado:
-
-1.  Ejecuta el comando de inicio en tu terminal:
+1.  Ejecuta el siguiente comando en tu terminal:
     ```bash
     npm start
     ```
-2.  **Escanea el QR:** Abre WhatsApp en tu teléfono, ve a `Dispositivos Vinculados` y escanea el código QR que aparecerá en la terminal.
-3.  Espera a que la conexión se establezca. Verás un mensaje de "Conectado!" en la consola.
-4.  ¡Listo! Envía `!ping` desde cualquier chat para probar si el bot responde.
+2.  Abre WhatsApp en tu teléfono, ve a `Ajustes > Dispositivos Vinculados` y escanea el código QR que aparecerá en la terminal.
+3.  Una vez conectado, ¡el bot está listo para usarse!
 
 ## 👑 Sistema VIP
 
-Los usuarios VIP tienen acceso a comandos premium.
-
 ### ¿Cómo dar VIP a un usuario?
 
-Solo el dueño del bot puede hacerlo. Usa el siguiente comando en cualquier chat con el bot:
+El dueño del bot puede usar el siguiente comando en cualquier chat:
+`!vip <número> <días>`
 
-```
-!vip <número> <días>
-```
+-   **Ejemplo:** `!vip 5218112345678 30`
+-   Esto dará acceso VIP al número especificado durante 30 días.
 
--   **Ejemplo:** `!vip 521987654321 30`
--   Esto le dará al número `521987654321` acceso VIP durante `30` días.
+El bot avisará al usuario cuando su suscripción esté a punto de expirar.
 
-El bot enviará una confirmación al dueño y una notificación al nuevo usuario VIP. También avisará al usuario un día antes de que su suscripción expire.
+## 🧩 Añadir Nuevos Comandos
 
-## 🧩 Añadir Nuevos Comandos (Para Desarrolladores)
+Crear un nuevo comando es muy fácil:
 
-El sistema de plugins hace que sea muy fácil añadir comandos.
-
-1.  Decide la categoría de tu comando: `free`, `premium`, `admin` u `owner`.
-2.  Si es un comando de `premium`, puedes crear una subcarpeta (ej. `premium/tools`).
-3.  Crea un nuevo archivo `.js` en la carpeta elegida (ej. `plugins/free/saludo.js`).
-4.  Usa la siguiente plantilla para tu comando:
+1.  Elige la categoría de tu comando: `free`, `premium`, `admin` u `owner`.
+2.  Crea un nuevo archivo `.js` en esa carpeta (ej. `plugins/free/miComando.js`).
+3.  Usa esta plantilla:
 
 ```javascript
-/**
- * Descripción corta del comando.
- * Categoría: free
- */
+import config from '../../config.js';
 
-const settings = require('../../config/settings'); // Importa la config si necesitas el prefijo, etc.
+export default {
+    name: 'micomando', // El nombre del comando
+    desc: 'Descripción de lo que hace el comando.',
+    usage: `${config.prefix}micomando [argumentos]`,
 
-module.exports = {
-    name: 'saludo', // El nombre del comando (lo que va después del prefijo)
-    desc: 'Envía un saludo amigable.', // Descripción para el menú de ayuda
-    usage: `${settings.bot.prefix}saludo`, // Cómo se usa el comando
+    // Banderas (opcional)
+    isOwner: false,       // Solo para el dueño
+    isGroup: false,       // Solo para grupos
+    isGroupAdmin: false,  // Solo para admins de grupo
 
-    // --- Banderas Opcionales ---
-    isOwner: false,       // ¿Solo para el dueño?
-    isPremium: false,     // ¿Solo para VIP? (se infiere de la carpeta 'premium')
-    isGroup: false,       // ¿Solo para grupos?
-    isGroupAdmin: false,  // ¿Solo para admins de grupo?
-
-    // --- La Lógica del Comando ---
-    execute: async (ctx) => {
-        const { sock, from, sender, msg } = ctx;
-
-        const message = `¡Hola, @${sender.split('@')[0]}! Soy JulesBot.`;
-
-        await sock.sendMessage(from, {
-            text: message,
-            mentions: [sender] // Importante para etiquetar al usuario
-        }, { quoted: msg });
+    async execute({ sock, from, args, msg }) {
+        // Tu lógica aquí
+        await sock.sendMessage(from, { text: '¡Mi nuevo comando funciona!' }, { quoted: msg });
     }
 };
 ```
 
-¡Eso es todo! El bot cargará automáticamente tu nuevo comando al reiniciar.
+El bot cargará tu nuevo comando automáticamente al reiniciar.
 
 ## 🔄 Comando de Actualización
 
-Si instalaste el bot usando `git clone`, el dueño puede usar el comando `!update` para actualizar el código del bot directamente desde el repositorio de GitHub sin necesidad de acceder a la terminal.
-
----
-Hecho con ❤️ por Jules.
+Si instalaste el bot usando `git clone`, el dueño puede usar el comando `!update` para actualizar el código del bot directamente desde el repositorio de GitHub. El bot instalará las nuevas dependencias si es necesario y te pedirá que lo reinicies.
