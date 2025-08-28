@@ -7,7 +7,7 @@ import makeWASocket, {
 import pino from 'pino';
 import qrcode from 'qrcode-terminal';
 import chalk from 'chalk';
-import figlet from 'figlet';
+import CFonts from 'cfonts';
 import fs from 'fs';
 import { loadCommandsAsync } from './lib/loader.js';
 import { handleMessage } from './lib/handler.js';
@@ -26,16 +26,28 @@ const logger = pino({
     }
 });
 
-// --- BANNER ---
-console.log(chalk.green(figlet.textSync('YuruYuri-MD', {
-    font: 'Standard',
-    horizontalLayout: 'full'
-})));
-console.log(chalk.yellow('      - A WhatsApp Bot by Im-Ado & Jules -'));
+// --- BANNER & CONSOLE SETUP ---
+function startConsole() {
+    console.clear();
+    CFonts.say('YuruYuri-MD', {
+        font: 'block',
+        align: 'center',
+        colors: ['#ff00ff', '#00ffff'],
+        background: 'transparent',
+        letterSpacing: 1,
+        lineHeight: 1,
+        space: true,
+        maxLength: '0',
+    });
+    console.log(chalk.bold.magenta(`\n      A WhatsApp Bot by Im-Ado & Jules\n`));
+    console.log(chalk.blue('─'.repeat(50)));
+}
 
+startConsole();
 
 // --- MAIN CONNECTION FUNCTION ---
 async function connectToWhatsApp() {
+    logger.info('Initializing connection...');
     const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys');
     const { version, isLatest } = await fetchLatestBaileysVersion();
     logger.info(`Using WA v${version.join('.')}, isLatest: ${isLatest}`);
